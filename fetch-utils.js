@@ -25,7 +25,6 @@ export async function deleteAllTodos() {
         .from('todos')
         .delete()
         .match({ user_id: client.auth.user().id, });
-
     return checkError(response);
 }
 
@@ -35,7 +34,6 @@ export async function getTodos() {
         .select()
         .order('complete')
         .match({ user_id: client.auth.user().id, });
-
     return checkError(response);    
 }
 

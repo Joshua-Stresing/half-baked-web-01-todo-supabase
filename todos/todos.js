@@ -36,19 +36,15 @@ async function displayTodos() {
     // be sure to give each todo an event listener
     // on click, complete that todo
     const todos = await getTodos();
-
+    console.log(todos);
     todosEl.textContent = '';
-
     for (let todo of todos) {
         const todoEl = renderTodo(todo);
-        console.log(todoEl, 'multi todos');
-        // console.log(todo, 'single todos');
         todoEl.addEventListener('click', async() => {
             await completeTodo(todo.id);
-
             displayTodos();
-        });
 
+        });        
         todosEl.append(todoEl);
     }
 }
