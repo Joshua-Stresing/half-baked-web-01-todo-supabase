@@ -7,7 +7,7 @@ import {
     deleteAllTodos, 
 } from '../fetch-utils.js';
 import { renderTodo } from '../render-utils.js';
-
+// this is set up^^^^^^^^^
 checkAuth();
 
 const todosEl = document.querySelector('.todos');
@@ -17,6 +17,15 @@ const deleteButton = document.querySelector('.delete-button');
 
 todoForm.addEventListener('submit', async(e) => {
     // on submit, create a todo, reset the form, and display the todos
+    e.preventDefault();
+
+    const formData = new FormData(todoForm);
+
+    const todo = formData.get('todo');
+
+    await createTodo(todo);
+
+    todoForm.requestFullscreen();
 });
 
 async function displayTodos() {

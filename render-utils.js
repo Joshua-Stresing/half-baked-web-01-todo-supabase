@@ -1,12 +1,20 @@
+// create a div and a p tag
+// depending on whether the todo is complete, give the div the appropriate css class ('complete' or 'incomplete')
+// add the 'todo' css class no matter what
+// put the todo's text into the p tag
+// append stuff
+// return the div
 export function renderTodo(todo) {
-    // create a div and a p tag
-    // depending on whether the todo is complete, give the div the appropriate css class ('complete' or 'incomplete')
 
-    // add the 'todo' css class no matter what
+    const div = document.createElement('div');
+    const p = document.createElement('p');
 
-    // put the todo's text into the p tag
+    div.classList.add(todo.complete ? 'complete' : 'incomplete');
+    div.classList.add('todo');
 
-    // append stuff
+    p.textContent = todo.todo;
 
-    // return the div
+    div.append(p);
+
+    return;
 }
