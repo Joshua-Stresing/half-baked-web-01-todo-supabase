@@ -1,29 +1,51 @@
-const SUPABASE_URL = 'https://gxwgjhfyrlwiqakdeamc.supabase.co';
+const SUPABASE_URL = 'https://hogsvwpywyaxkjlqavnk.supabase.co';
 const SUPABASE_KEY =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzNjQxMTMxMiwiZXhwIjoxOTUxOTg3MzEyfQ.PHekiwfLxT73qQsLklp0QFEfNx9NlmkssJFDnlvNIcA';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhvZ3N2d3B5d3lheGtqbHFhdm5rIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDQzNDE0MjgsImV4cCI6MTk1OTkxNzQyOH0.WAiLrZ3mwONCOVJiPp_a-AERLY-_YjL2j4b7vkU6QwQ';
 
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+// create a single incomplete todo with the correct 'todo' property for this user in supabase
 export async function createTodo(todo) {
-    // create a single incomplete todo with the correct 'todo' property for this user in supabase
+    const response = await client
+    
+        .from('todos')
+        .insert({
+            todo: todo,
+            complete: false,
+            user_id: client.auth.user().id,
+        })
+        .single();
 
     return checkError(response);
 }
 
+// delete all todos for this user in supabase
 export async function deleteAllTodos() {
-    // delete all todos for this user in supabase
-
+    const response = await client
+        .from('todos')
+        .delete()
+        .match({ user_id: client.auth.user().id, });
     return checkError(response);
 }
 
 export async function getTodos() {
-    // get all todos for this user from supabase
-
-    return checkError(response);
+    const response = await client
+        .from('todos')
+        .select()
+        .order('complete')
+        .match({ user_id: client.auth.user().id, });
+    return checkError(response);    
 }
 
+// find the and update (set complete to true), the todo that matches the correct id
 export async function completeTodo(id) {
-    // find the and update (set complete to true), the todo that matches the correct id
+    const response = await client
+        .from('todos')
+        .update({ complete: true })
+        .match({
+            user_id: client.auth.user().id,
+            id: id,
+        });
 
     return checkError(response);
 }
