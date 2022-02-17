@@ -16,5 +16,5 @@ export function renderTodo(todo) {
 
     div.append(p);
 
-    return;
+    return div;
 }
